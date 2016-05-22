@@ -1,0 +1,66 @@
+
+# ==== Cloclk inputs (CLK) ====
+
+NET "clk"   LOC = "E3"	| IOSTANDARD = "LVCMOS33";
+#NET "clk" TNM_NET = sys_clk;
+TIMESPEC TS_sys_clk = PERIOD sys_clk_pin 100 MHz HIGH 50%; 
+
+NET "rst"	LOC = "C12"	| IOSTANDARD = "LVCMOS33";
+NET "led"	LOC = "B13"	| IOSTANDARD = "LVCMOS33";
+
+
+# ==== UART ====
+NET "uart_rxd"	LOC = "C4"	| IOSTANDARD = "LVCMOS33";		
+NET "uart_txd"	LOC = "D4"	| IOSTANDARD = "LVCMOS33";	
+
+#===== GPIO =====
+
+NET "gpio_io<0>"	LOC = "F15"	| IOSTANDARD = "LVCMOS33"; 
+NET "gpio_io<1>"	LOC = "T16"	| IOSTANDARD = "LVCMOS33";		
+NET "gpio_io<2>"	LOC = "V10"	| IOSTANDARD = "LVCMOS33";		  
+NET "gpio_io<3>"	LOC = "R10"	| IOSTANDARD = "LVCMOS33";		
+NET "gpio_io<4>"	LOC = "T5"	| IOSTANDARD = "LVCMOS33";		
+NET "gpio_io<5>"	LOC = "T4"	| IOSTANDARD = "LVCMOS33";		
+NET "gpio_io<6>"	LOC = "U7"	| IOSTANDARD = "LVCMOS33";		
+NET "gpio_io<7>"	LOC = "U6"	| IOSTANDARD = "LVCMOS33";	
+
+# ==== SPI ====
+NET "spi_miso"	LOC = "F14"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_mosi"	LOC = "D17"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_clk"	LOC = "E17"	| IOSTANDARD = "LVCMOS33";		
+
+NET "spi_cs<0>"	LOC = "V4"	| IOSTANDARD = "LVCMOS33"; 
+NET "spi_cs<1>"	LOC = "U3"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs<2>"	LOC = "V1"	| IOSTANDARD = "LVCMOS33";		  
+NET "spi_cs<3>"	LOC = "R1"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs<4>"	LOC = "P5"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs<5>"	LOC = "U1"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs<6>"	LOC = "R2"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs<7>"	LOC = "P2"	| IOSTANDARD = "LVCMOS33";
+
+NET "spi_miso1"	LOC = "G4"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_mosi1"	LOC = "G2"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_clk1"	LOC = "F3"	| IOSTANDARD = "LVCMOS33";
+
+NET "spi_cs1<0>"	LOC = "H4"	| IOSTANDARD = "LVCMOS33"; 
+NET "spi_cs1<1>"	LOC = "H1"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs1<2>"	LOC = "G1"	| IOSTANDARD = "LVCMOS33";		  
+NET "spi_cs1<3>"	LOC = "G3"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs1<4>"	LOC = "T6"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs1<5>"	LOC = "R8"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs1<6>"	LOC = "V9"	| IOSTANDARD = "LVCMOS33";		
+NET "spi_cs1<7>"	LOC = "T8"	| IOSTANDARD = "LVCMOS33";
+
+## Micro SD Connector
+#NET "sdReset"			LOC = "E2"  | IOSTANDARD = "LVCMOS33";		#Bank = 35, Pin name = IO_L14P_T2_SRCC_35,					Sch name = SD_RESET
+#NET "sdCD"				LOC = "A1"  | IOSTANDARD = "LVCMOS33";		#Bank = 35, Pin name = IO_L9N_T1_DQS_AD7N_35,				Sch name = SD_CD
+#NET "sdSCK"			LOC = "B1"  | IOSTANDARD = "LVCMOS33";		#Bank = 35, Pin name = IO_L9P_T1_DQS_AD7P_35,				Sch name = SD_SCK
+#NET "sdCmd"			LOC = "C1"  | IOSTANDARD = "LVCMOS33";		#Bank = 35, Pin name = IO_L16N_T2_35,						Sch name = SD_CMD
+#NET "sdData<0>"		LOC = "C2"  | IOSTANDARD = "LVCMOS33";		#Bank = 35, Pin name = IO_L16P_T2_35,						Sch name = SD_DAT0
+#NET "sdData<1>" 		LOC = "E1"  | IOSTANDARD = "LVCMOS33";		#Bank = 35, Pin name = IO_L18N_T2_35,						Sch name = SD_DAT1
+#NET "sdData<2>"		LOC = "F1"  | IOSTANDARD = "LVCMOS33";		#Bank = 35, Pin name = IO_L18P_T2_35,						Sch name = SD_DAT2
+#NET "sdData<3>"		LOC = "D2"  | IOSTANDARD = "LVCMOS33";		#Bank = 35, Pin name = IO_L14N_T2_SRCC_35,					Sch name = SD_DAT3
+
+# ==== I2C ====
+#NET "i2c_sda"	LOC = "V9"	| IOSTANDARD = "LVCMOS33";		
+#NET "i2c_clk"	LOC = "R8"	| IOSTANDARD = "LVCMOS33";		

@@ -1,0 +1,74 @@
+/**
+ * 
+ */
+
+#include "soc-hw.h"
+
+int main()
+{
+	//uint32_t a2 = 4;
+	/*while (gpio0 -> gpio_dir = 0xFF){
+		
+	gpio0 -> gpio_in;	
+	gpio0->gpio_o = 0x01;
+	nsleep(5);
+	gpio0 -> gpio_in;
+	gpio0->gpio_o = 0x00;
+	nsleep(5);
+}*/ 
+
+uint8_t a ;
+uint8_t b ;	
+	spi_set_cs(0x00);
+	nsleep(5);	
+	spi_set_cs(0x01);
+	spi_set_cs(0x02);
+	spi_set_cs(0x04);
+	spi_set_cs(0x08);
+	
+	spi_set_div(50);
+	spi_set_mosi(0xAA);		
+	gpio_set_dir(0xF0);
+	a= gpio_get_in();
+	gpio_set_out(a);
+	b= a << 4;
+	gpio_set_out(b);
+	
+	if (a == 0x0F){
+	uart_putstr("lo ke sea: \n");
+	
+	}
+
+
+/*int i=0;	
+for(i=0; i<1000000; i++){
+	if(i<500000){
+		gpio_set_out(0xFF);	
+	}
+	else{
+	gpio_set_out(0x00);
+		}
+
+*/	
+
+
+	/*char id = uart_getchar ();
+	
+	switch (id) {
+		case 'n':
+			uart_putstr("su nombre\n");
+		break;
+
+		case 'p':
+			uart_putstr("su apellido\n");
+		break;
+
+		case 'c':
+			uart_putstr("su nombre\n");
+		break;
+
+		default:
+			uart_putstr("ingrese un dato\n");
+			}*/
+}
+

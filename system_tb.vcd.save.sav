@@ -1,0 +1,46 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Tue May 10 16:21:10 2016
+[*]
+[dumpfile] "/home/kmilo/Documents/sie/simulation/system_tb.vcd"
+[dumpfile_mtime] "Tue May 10 16:19:50 2016"
+[dumpfile_size] 16730823
+[savefile] "/home/kmilo/Documents/sie/system_tb.vcd.save.sav"
+[timestart] 0
+[size] 1317 744
+[pos] -1 -1
+*-26.426245 23530000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] system_tb.
+[treeopen] system_tb.dut.
+[sst_width] 223
+[signals_width] 262
+[sst_expanded] 1
+[sst_vpaned_height] 221
+@29
+system_tb.dut.spi0.clk
+@22
+system_tb.dut.gpio0.wb_adr_i[31:0]
+system_tb.dut.gpio0.wb_dat_i[31:0]
+system_tb.dut.gpio0.wb_dat_o[31:0]
+system_tb.dut.gpio0.gpio_dir[7:0]
+system_tb.dut.gpio0.gpio_i[7:0]
+system_tb.dut.gpio0.gpio_io[7:0]
+system_tb.dut.gpio0.gpio_o[7:0]
+@28
+system_tb.dut.spi0.run
+system_tb.dut.spi0.run
+system_tb.dut.spi0.spi_sck
+@22
+system_tb.dut.spi0.spi_cs[7:0]
+@28
+system_tb.dut.spi0.spi_miso
+system_tb.dut.spi0.spi_mosi
+system_tb.dut.spi1.run
+system_tb.dut.spi1.spi_sck
+@22
+system_tb.dut.spi1.spi_cs[7:0]
+@28
+system_tb.dut.spi1.spi_miso
+system_tb.dut.spi1.spi_mosi
+[pattern_trace] 1
+[pattern_trace] 0

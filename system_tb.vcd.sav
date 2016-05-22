@@ -1,0 +1,31 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Wed Apr 20 13:29:27 2016
+[*]
+[dumpfile] "/home/kmilo/Documents/sie/simulation/system_tb.vcd"
+[dumpfile_mtime] "Wed Apr 20 13:28:43 2016"
+[dumpfile_size] 12109331
+[savefile] "/home/kmilo/Documents/sie/system_tb.vcd.sav"
+[timestart] 0
+[size] 1317 744
+[pos] -1 -117
+*0.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] system_tb.
+[treeopen] system_tb.dut.
+[sst_width] 223
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 211
+@22
+system_tb.dut.gpio0.gpio_dir[7:0]
+system_tb.dut.gpio0.gpio_i[7:0]
+system_tb.dut.gpio0.gpio_io[7:0]
+system_tb.dut.gpio0.gpio_o[7:0]
+system_tb.dut.gpio0.wb_adr_i[31:0]
+system_tb.dut.gpio0.wb_dat_i[31:0]
+system_tb.dut.gpio0.wb_dat_o[31:0]
+system_tb.data[7:0]
+@23
+system_tb.data[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
