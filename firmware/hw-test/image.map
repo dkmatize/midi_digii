@@ -153,11 +153,11 @@ OUTPUT(image elf32-lm32)
  .debug_aranges
                 0x0000000000000020       0x20 soc-hw.o
 
-.debug_str      0x0000000000000000      0x284
- .debug_str     0x0000000000000000       0xa4 main.o
-                                         0xb5 (size before relaxing)
- .debug_str     0x00000000000000a4      0x1e0 soc-hw.o
-                                        0x286 (size before relaxing)
+.debug_str      0x0000000000000000      0x28b
+ .debug_str     0x0000000000000000       0xab main.o
+                                         0xbc (size before relaxing)
+ .debug_str     0x00000000000000ab      0x1e0 soc-hw.o
+                                        0x28d (size before relaxing)
 
 .comment        0x0000000000000000       0x11
  .comment       0x0000000000000000       0x11 main.o

@@ -174,9 +174,7 @@ initial begin
 	#1000;
 	#2000 data <= 8'h00;
 	#1000;		
-	#(tck*10000) $finish;
+	#(tck*20000) $finish;
 end
-
-
 
 endmodule

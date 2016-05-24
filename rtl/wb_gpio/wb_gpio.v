@@ -63,7 +63,11 @@ module wb_gpio(
    //I/O PORT
    inout [gpio_io_width-1:0] gpio_io;
    //Interupt
-
+	output irq;
+	reg reg_interrupt;
+	reg cont;
+	wire [7:0] interrupt_mask;
+	wire [7:0] vec_interrupt;
 
    // Internal registers
    reg [gpio_io_width-1:0]   gpio_dir;
@@ -74,15 +78,11 @@ module wb_gpio(
    
 //Wisbone logical Interface
 
-   
-
-
    wire wb_rd = wb_stb_i & wb_cyc_i & ~wb_we_i;
    wire wb_wr = wb_stb_i & wb_cyc_i &  wb_we_i;
 
    reg  ack;
    assign wb_ack_o = wb_stb_i & wb_cyc_i & ack;
-    
     
    // Tristate logic for IO
    genvar    i;
@@ -93,7 +93,7 @@ module wb_gpio(
 	 end
    endgenerate
   //Interupt Mask
-/*
+
   assign interrupt_mask = ~gpio_dir & wb_dat_o;
   
   rising_edge_detect r0(.clk(clk),.signal(interrupt_mask[0]),.pulse(vec_interrupt[0]));
@@ -106,12 +106,12 @@ module wb_gpio(
   rising_edge_detect r7(.clk(clk),.signal(interrupt_mask[7]),.pulse(vec_interrupt[7]));
   
   assign irq=|vec_interrupt;
- */ 
+ 
    // GPIO data out register
    always @(posedge clk)begin
      if (rst)begin
         gpio_o <= 0; // All set to in at reset
-        gpio_dir <= 0;
+        gpio_dir <= 0;	
         ack <= 0;
      end
      else begin 
@@ -136,22 +136,21 @@ module wb_gpio(
         end
      end        
    end   
-/*
-  always @(posedge clk)begin
+
+   always @(posedge clk)begin
     if(cont < 1'b1) cont<=cont+1;
     else begin
     reg_interrupt<=interrupt_mask;
     cont<=0;
     end  
   end
-
+/*
   always @(posedge clk)
   if(interrupt_mask==reg_interrupt) irq<=0;
-  else irq<=1;  
-*/  
+  else irq <= 1;*/  
+  
 endmodule 
-        
-/*       
+      
 module rising_edge_detect
 (
  input  clk,
@@ -166,4 +165,4 @@ always @(posedge clk) signal_prev <= signal;
 assign pulse = signal & ~signal_prev;
  
 endmodule
-*/
+

@@ -27,11 +27,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_aranges 00000040  00000000  00000000  00001c33  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_str    00000284  00000000  00000000  00001c73  2**0
+ 12 .debug_str    0000028b  00000000  00000000  00001c73  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .comment      00000011  00000000  00000000  00001ef7  2**0
+ 13 .comment      00000011  00000000  00000000  00001efe  2**0
                   CONTENTS, READONLY
- 14 .debug_ranges 00000018  00000000  00000000  00001f08  2**0
+ 14 .debug_ranges 00000018  00000000  00000000  00001f0f  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -228,10 +228,10 @@ int main()
  230:	39 8c 06 2c 	ori r12,r12,0x62c
  234:	39 6b 06 30 	ori r11,r11,0x630
  238:	39 ef 06 0c 	ori r15,r15,0x60c
-	a= gpio_get_in();
-	gpio_set_out(a);
-	b = a << 4;
-	gpio_set_out(b);
+	
+	irq_set_mask(0x04);
+	
+	irq_set_mask(0x08);
 	
 	if (a == 0x0F){
  23c:	34 0e 00 0f 	mvi r14,15
@@ -244,53 +244,62 @@ char m;
  240:	29 81 00 00 	lw r1,(r12+0)
  244:	34 02 00 ff 	mvi r2,255
  248:	f8 00 00 e1 	calli 5cc <spi_set_cs>
-	msleep(100);
- 24c:	34 01 00 64 	mvi r1,100
- 250:	f8 00 00 5e 	calli 3c8 <msleep>
+	//msleep(100);
 	spi_set_cs(spi0, ~0xFF);
- 254:	29 81 00 00 	lw r1,(r12+0)
- 258:	34 02 00 00 	mvi r2,0
- 25c:	f8 00 00 dc 	calli 5cc <spi_set_cs>
-	msleep(100);			
- 260:	34 01 00 64 	mvi r1,100
- 264:	f8 00 00 59 	calli 3c8 <msleep>
+ 24c:	29 81 00 00 	lw r1,(r12+0)
+ 250:	34 02 00 00 	mvi r2,0
+ 254:	f8 00 00 de 	calli 5cc <spi_set_cs>
+	//msleep(100);			
 	spi_set_mosi(spi0, 0xA0);
- 268:	29 81 00 00 	lw r1,(r12+0)
- 26c:	34 02 00 a0 	mvi r2,160
- 270:	f8 00 00 da 	calli 5d8 <spi_set_mosi>
+ 258:	29 81 00 00 	lw r1,(r12+0)
+ 25c:	34 02 00 a0 	mvi r2,160
+ 260:	f8 00 00 de 	calli 5d8 <spi_set_mosi>
 
 	spi_set_cs(spi1, ~0x00);
- 274:	29 61 00 00 	lw r1,(r11+0)
- 278:	34 02 00 ff 	mvi r2,255
- 27c:	f8 00 00 d4 	calli 5cc <spi_set_cs>
-	msleep(200);
- 280:	34 01 00 c8 	mvi r1,200
- 284:	f8 00 00 51 	calli 3c8 <msleep>
+ 264:	29 61 00 00 	lw r1,(r11+0)
+ 268:	34 02 00 ff 	mvi r2,255
+ 26c:	f8 00 00 d8 	calli 5cc <spi_set_cs>
+	//msleep(200);
 	spi_set_cs(spi1, ~0xFF);
- 288:	29 61 00 00 	lw r1,(r11+0)
- 28c:	34 02 00 00 	mvi r2,0
- 290:	f8 00 00 cf 	calli 5cc <spi_set_cs>
-	msleep(200);			
- 294:	34 01 00 c8 	mvi r1,200
- 298:	f8 00 00 4c 	calli 3c8 <msleep>
+ 270:	29 61 00 00 	lw r1,(r11+0)
+ 274:	34 02 00 00 	mvi r2,0
+ 278:	f8 00 00 d5 	calli 5cc <spi_set_cs>
+	//msleep(200);			
 	spi_set_mosi(spi1, 0x0A);
- 29c:	29 61 00 00 	lw r1,(r11+0)
- 2a0:	34 02 00 0a 	mvi r2,10
- 2a4:	f8 00 00 cd 	calli 5d8 <spi_set_mosi>
+ 27c:	29 61 00 00 	lw r1,(r11+0)
+ 280:	34 02 00 0a 	mvi r2,10
+ 284:	f8 00 00 d5 	calli 5d8 <spi_set_mosi>
 
+	
 	gpio_set_dir(0xF0);
- 2a8:	34 01 00 f0 	mvi r1,240
- 2ac:	f8 00 00 ab 	calli 558 <gpio_set_dir>
+ 288:	34 01 00 f0 	mvi r1,240
+ 28c:	f8 00 00 b3 	calli 558 <gpio_set_dir>
 	a= gpio_get_in();
- 2b0:	f8 00 00 92 	calli 4f8 <gpio_get_in>
- 2b4:	b8 20 68 00 	mv r13,r1
+ 290:	f8 00 00 9a 	calli 4f8 <gpio_get_in>
+ 294:	b8 20 68 00 	mv r13,r1
 	gpio_set_out(a);
- 2b8:	f8 00 00 ae 	calli 570 <gpio_set_out>
+ 298:	f8 00 00 b6 	calli 570 <gpio_set_out>
 	b = a << 4;
- 2bc:	3d a1 00 04 	sli r1,r13,4
+ 29c:	3d a1 00 04 	sli r1,r13,4
 	gpio_set_out(b);
- 2c0:	20 21 00 f0 	andi r1,r1,0xf0
- 2c4:	f8 00 00 ab 	calli 570 <gpio_set_out>
+ 2a0:	20 21 00 f0 	andi r1,r1,0xf0
+ 2a4:	f8 00 00 b3 	calli 570 <gpio_set_out>
+	
+	irq_set_mask(0x00);
+ 2a8:	34 01 00 00 	mvi r1,0
+ 2ac:	fb ff ff ab 	calli 158 <irq_set_mask>
+	
+	irq_set_mask(0x02);
+ 2b0:	34 01 00 02 	mvi r1,2
+ 2b4:	fb ff ff a9 	calli 158 <irq_set_mask>
+	
+	irq_set_mask(0x04);
+ 2b8:	34 01 00 04 	mvi r1,4
+ 2bc:	fb ff ff a7 	calli 158 <irq_set_mask>
+	
+	irq_set_mask(0x08);
+ 2c0:	34 01 00 08 	mvi r1,8
+ 2c4:	fb ff ff a5 	calli 158 <irq_set_mask>
 	
 	if (a == 0x0F){
  2c8:	5d ae ff de 	bne r13,r14,240 <main+0x38>

@@ -24,22 +24,31 @@ char m;
 	
 	while (1){
 	spi_set_cs(spi0, ~0x00);
-	msleep(100);
+	//msleep(100);
 	spi_set_cs(spi0, ~0xFF);
-	msleep(100);			
+	//msleep(100);			
 	spi_set_mosi(spi0, 0xA0);
 
 	spi_set_cs(spi1, ~0x00);
-	msleep(200);
+	//msleep(200);
 	spi_set_cs(spi1, ~0xFF);
-	msleep(200);			
+	//msleep(200);			
 	spi_set_mosi(spi1, 0x0A);
 
+	
 	gpio_set_dir(0xF0);
 	a= gpio_get_in();
 	gpio_set_out(a);
 	b = a << 4;
 	gpio_set_out(b);
+	
+	irq_set_mask(0x00);
+	
+	irq_set_mask(0x02);
+	
+	irq_set_mask(0x04);
+	
+	irq_set_mask(0x08);
 	
 	if (a == 0x0F){
 	uart_putstr("lo ke sea: \n");
