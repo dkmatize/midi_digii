@@ -3,9 +3,24 @@
  */
 
 #include "soc-hw.h"
+void irq_handler(uint32_t pending);
+
+void irq_handler(uint32_t pending)
+{
+	irq_disable();	
+	gpio_set_out(0xFF);
+        //irq_enable();
+}
+
 
 int main()
 {
+	
+        gpio_set_dir(0xF0);
+
+        irq_enable();
+        irq_set_mask(0x04);
+	
 	//uint32_t a2 = 4;
 	/*while (gpio0 -> gpio_dir = 0xFF){
 		
@@ -23,6 +38,7 @@ char c;// = gpio_get_in();
 char m;
 	
 	while (1){
+        
 	spi_set_cs(spi0, ~0x00);
 	//msleep(100);
 	spi_set_cs(spi0, ~0xFF);
@@ -36,11 +52,14 @@ char m;
 	spi_set_mosi(spi1, 0x0A);
 
 	
-	gpio_set_dir(0xF0);
+	
 	a= gpio_get_in();
+	nsleep(5);
 	gpio_set_out(a);
+	nsleep(5);
 	b = a << 4;
 	gpio_set_out(b);
+	nsleep(5);
 	
 	irq_set_mask(0x00);
 	
@@ -49,6 +68,7 @@ char m;
 	irq_set_mask(0x04);
 	
 	irq_set_mask(0x08);
+	
 	
 	if (a == 0x0F){
 	uart_putstr("lo ke sea: \n");

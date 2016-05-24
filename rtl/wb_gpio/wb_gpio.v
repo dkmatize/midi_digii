@@ -83,6 +83,10 @@ module wb_gpio(
 
    reg  ack;
    assign wb_ack_o = wb_stb_i & wb_cyc_i & ack;
+
+   initial begin
+	gpio_dir = 0;
+   end
     
    // Tristate logic for IO
    genvar    i;
@@ -94,7 +98,7 @@ module wb_gpio(
    endgenerate
   //Interupt Mask
 
-  assign interrupt_mask = ~gpio_dir & wb_dat_o;
+  assign interrupt_mask = ~gpio_dir & gpio_io;
   
   rising_edge_detect r0(.clk(clk),.signal(interrupt_mask[0]),.pulse(vec_interrupt[0]));
   rising_edge_detect r1(.clk(clk),.signal(interrupt_mask[1]),.pulse(vec_interrupt[1]));
@@ -144,9 +148,9 @@ module wb_gpio(
     cont<=0;
     end  
   end
-/*
-  always @(posedge clk)
-  if(interrupt_mask==reg_interrupt) irq<=0;
+
+  /*always @(posedge clk)
+  if(interrupt_mask==reg_interrupt) irq <= 0;
   else irq <= 1;*/  
   
 endmodule 

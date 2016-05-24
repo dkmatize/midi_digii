@@ -69,13 +69,15 @@ initial begin
 	$dumpvars(-1, dut,data,gpio_io);
 	//$dumpvars(-1,clk,rst,uart_txd);
 	// reset
+        #0 data <= 8'h00;
+        #0 gpio_dir <= 8'h00;
 	#0  rst <= 0;
 	#1000 rst <= 1;
 	#3000
 	#2000 gpio_dir <= 8'hF0;
 	#2000;	
 	#2000 data <= 8'hAA;
-	#1000;
+	#100000;
 	#2000 data <= 8'h0A;
 	#1000;
 	#2000 data <= 8'hAA;
@@ -174,7 +176,7 @@ initial begin
 	#1000;
 	#2000 data <= 8'h00;
 	#1000;		
-	#(tck*20000) $finish;
+	#(tck*10000) $finish;
 end
 
 endmodule

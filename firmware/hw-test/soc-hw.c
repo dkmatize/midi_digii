@@ -6,13 +6,14 @@ gpio_t   *gpio0  = (gpio_t *)   0x40000000;
 spi_t	*spi0 	= (spi_t *)  	0x50000000;
 spi_t	*spi1	=	(spi_t *)	0x60000000; 
 
-isr_ptr_t isr_table[32];
+//isr_ptr_t isr_table[32];
 
 
 void tic_isr();
 /***************************************************************************
  * IRQ handling
  */
+/*
 void isr_null()
 {
 }
@@ -43,7 +44,7 @@ void isr_unregister(int irq)
 {
 	isr_table[irq] = &isr_null;
 }
-
+*/
 /***************************************************************************
  * TIMER Functions
  */
@@ -95,7 +96,7 @@ void tic_init()
 	timer0->counter0 = 0;
 	timer0->tcr0     = TIMER_EN | TIMER_AR | TIMER_IRQEN;
 
-	isr_register(1, &tic_isr);
+	//isr_register(1, &tic_isr);
 }
 
 
