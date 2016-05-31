@@ -20,7 +20,8 @@ reg        rst;
 wire       led;
 reg [7:0] data;
 wire [7:0] gpio_io;
-wire [7:0] spi_mosi;	
+wire [7:0] spi_mosi;
+wire [7:0] spi_cs;
 wire [7:0] gpio_i;
 reg [7:0] gpio_dir;
 
@@ -52,7 +53,7 @@ system #(
 	// Uart
 	.uart_rxd(  uart_rxd  ),
 	.uart_txd(  uart_txd  ),
-	.gpio_io ( gpio_io )
+	.gpio_io( gpio_io )
 );
 
 /* Clocking device */
@@ -69,9 +70,8 @@ initial begin
 	$dumpvars(-1, dut,data,gpio_io);
 	//$dumpvars(-1,clk,rst,uart_txd);
 	// reset
-        #0 data <= 8'h00;
-        #0 gpio_dir <= 8'h00;
 	#0  rst <= 0;
+	#0  gpio_dir <= 8'h00;
 	#1000 rst <= 1;
 	#3000
 	#2000 gpio_dir <= 8'hF0;
@@ -176,7 +176,9 @@ initial begin
 	#1000;
 	#2000 data <= 8'h00;
 	#1000;		
-	#(tck*10000) $finish;
+	#(tck*20000) $finish;
 end
+
+
 
 endmodule
