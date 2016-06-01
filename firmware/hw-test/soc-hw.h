@@ -84,7 +84,9 @@ void gpio_set_out(char c);
 void gpio_set_dir(char c);
 
 
-/************************ UART0********** */
+/***************************************************************************
+ * UART0
+ */
 #define UART_DR   0x01                    // RX Data Ready
 #define UART_ERR  0x02                    // RX Error
 #define UART_BUSY 0x10                    // TX Busy
@@ -99,15 +101,17 @@ void uart_putchar(char c);
 void uart_putstr(char *str);
 char uart_getchar();
 
-/****************************** SPI0***********/
-
+/***************************************************************************
+ * SPI0
+ */
 typedef struct {
-	volatile uint32_t spi_rx_tx; 		//miso=rx, mosi=tx ----- 4b0000 5...00000
+	volatile uint32_t spi_rx_tx; //miso=rx, mosi=tx ----- 4b0000 5...00000
 	volatile uint32_t spi_run;			//5...0000100
 	volatile uint32_t spi_cs;			//5...0001000
-	volatile uint32_t spi_divisor;		//5...0001100
+	volatile uint32_t spi_divisor;			//5...0001100
 		
 } spi_t;
+<<<<<<< HEAD
 char read_adc(spi_t *spi, char cs);
 char spi_get_div(spi_t *spi);
 char spi_get_mosi(spi_t *spi);
@@ -120,6 +124,19 @@ void spi_set_cs(spi_t *spi, char c);
 
 /*********************SPI1****************************/
 /*
+=======
+
+char read_adc(char cs);
+void spi_init();
+char spi_get_div();
+char spi_get_mosi();
+char spi_get_miso();
+char spi_get_cs();
+void spi_set_div(char c);
+void spi_set_mosi(char c);
+void spi_set_miso(char c);
+void spi_set_cs(char c);
+>>>>>>> ffde8aaad70c2b6386f51676d8f79c419a5a5789
 char spi1_get_div();
 char spi1_get_mosi();
 char spi1_get_miso();
@@ -128,7 +145,8 @@ void spi1_set_div(char c);
 void spi1_set_mosi(char c);
 void spi1_set_miso(char c);
 void spi1_set_cs(char c);
-*/
+
+
 /***************************************************************************
  * Pointer to actual components
  */
@@ -136,7 +154,7 @@ extern timer_t  *timer0;
 extern uart_t   *uart0; 
 extern gpio_t   *gpio0; 
 extern spi_t 	*spi0;
-extern spi_t   *spi1;
+extern spi_t    *spi1;
 extern uint32_t *sram0; 
 
 #endif // SPIKEHW_H
