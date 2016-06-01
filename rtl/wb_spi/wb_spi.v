@@ -2,7 +2,7 @@
 // SPI Master
 //-----------------------------------------------------------------
 
-module wb_spi(
+module wb_spi #(parameter CS_WIDTH=4)(
 	input               clk,
 	input               reset,
 	// Wishbone bus
@@ -18,7 +18,8 @@ module wb_spi(
 	output              spi_sck,
 	output              spi_mosi,
 	input               spi_miso,
-	output reg   [3:0]  spi_cs
+	output		    spi_led,
+	output reg   [CS_WIDTH-1:0]  spi_cs
 );
 
 
@@ -29,7 +30,7 @@ module wb_spi(
 	wire wb_wr = wb_stb_i & wb_cyc_i & ~ack & wb_we_i;
 
 	
-	reg [2:0] bitcount;
+	reg [3:0] bitcount;
 	reg ilatch;
 	reg run;
 
@@ -62,7 +63,10 @@ module wb_spi(
 					if(sck == 1'b1) begin
 						bitcount <= bitcount + 1;
 						if(bitcount == 3'b111) begin
-							run <= 1'b0;
+							run <= 1'b0; 
+							bitcount <= 3'b000;
+							if(CS_WIDTH == 4)
+								spi_cs <= 4'b1111;
 						end
 						
 						sreg [7:0] <= {sreg[6:0], ilatch};
@@ -89,7 +93,7 @@ module wb_spi(
 							run     <=  1'b1;
 						end
 					4'b0010:
-							spi_cs  <=  wb_dat_i[3:0];
+							spi_cs  <=  wb_dat_i[CS_WIDTH-1:0];
 					4'b0011: 
 							divisor <=  wb_dat_i[7:0];
 				endcase
