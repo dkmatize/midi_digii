@@ -108,7 +108,7 @@ typedef struct {
 	volatile uint32_t spi_divisor;		//5...0001100
 		
 } spi_t;
-
+char read_adc(spi_t *spi, char cs);
 char spi_get_div(spi_t *spi);
 char spi_get_mosi(spi_t *spi);
 char spi_get_miso(spi_t *spi);

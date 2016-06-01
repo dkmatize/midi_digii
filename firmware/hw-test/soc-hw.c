@@ -166,6 +166,8 @@ void gpio_set_out(char c){
 }
 
 /*****************************************SPI0 Functions****/
+
+
 char spi_get_div(spi_t *spi){
 	return spi->spi_divisor;
 }
@@ -183,6 +185,36 @@ char spi_get_miso(spi_t *spi){
 	while ((spi -> spi_run));
 	return spi->spi_rx_tx;
 
+}
+
+char read_adc(spi_t *spi0, char cs){
+	spi_set_cs(spi0, 0xF);
+	nsleep(20);	
+	char msb;
+	char lsb;
+	char lsb2;	
+	spi_set_cs(spi0, cs);
+	nsleep(30);
+	spi_set_mosi(spi0, 0xC0);
+	msb = spi_get_miso(spi0);
+	spi_set_cs(spi0, cs);
+	spi_set_mosi(spi0, 0x00);
+	lsb = spi_get_miso(spi0);
+	spi_set_cs(spi0, cs);
+	spi_set_mosi(spi0, 0x00);
+	lsb2 = spi_get_miso(spi0);
+	if(msb == 0x00 && lsb == 0x00 && lsb == 0x00){
+	spi_set_cs(spi0, 0x01);
+	}
+	else
+	spi_set_cs(spi0, 0x00);	
+}
+
+void spi_init(spi0){
+	read_adc(spi0, 0x01);
+	read_adc(spi0, 0x02);
+	read_adc(spi0, 0x04);
+	read_adc(spi0, 0x08);
 }
 
 void spi_set_div(spi_t *spi, char c){

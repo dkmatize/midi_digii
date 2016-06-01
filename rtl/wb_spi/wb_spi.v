@@ -32,7 +32,8 @@ module wb_spi(
 	reg [2:0] bitcount;
 	reg ilatch;
 	reg run;
-
+	
+	
 	reg sck;
 
 	//prescaler registers for sclk

@@ -7,7 +7,7 @@ void irq_handler(uint32_t pending);
 
 void irq_handler(uint32_t pending)
 {
-	irq_disable();	
+	//irq_disable();	
 	gpio_set_out(0xFF);
         //irq_enable();
 }
@@ -15,12 +15,11 @@ void irq_handler(uint32_t pending)
 
 int main()
 {
-	
+		
+        irq_set_mask(0x04);
+        //irq_enable();
         gpio_set_dir(0xF0);
 
-        irq_enable();
-        irq_set_mask(0x04);
-	
 	//uint32_t a2 = 4;
 	/*while (gpio0 -> gpio_dir = 0xFF){
 		
@@ -39,7 +38,7 @@ char m;
 	
 	while (1){
         
-	spi_set_cs(spi0, ~0x00);
+	/*spi_set_cs(spi0, ~0x00);
 	//msleep(100);
 	spi_set_cs(spi0, ~0xFF);
 	//msleep(100);			
@@ -50,8 +49,8 @@ char m;
 	spi_set_cs(spi1, ~0xFF);
 	//msleep(200);			
 	spi_set_mosi(spi1, 0x0A);
-
-	
+*/
+	read_adc(spi0, ~0x01);
 	
 	a= gpio_get_in();
 	nsleep(5);
@@ -61,20 +60,13 @@ char m;
 	gpio_set_out(b);
 	nsleep(5);
 	
-	irq_set_mask(0x00);
-	
-	irq_set_mask(0x02);
-	
-	irq_set_mask(0x04);
-	
-	irq_set_mask(0x08);
-	
-	
+
 	if (a == 0x0F){
 	uart_putstr("lo ke sea: \n");
 	
 	}
 }
+irq_disable();
 
 /*int i=0;	
 for(i=0; i<1000000; i++){
