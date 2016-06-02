@@ -33,7 +33,8 @@ module wb_spi #(parameter CS_WIDTH=4)(
 	reg [3:0] bitcount;
 	reg ilatch;
 	reg run;
-
+	
+	
 	reg sck;
 
 	//prescaler registers for sclk
