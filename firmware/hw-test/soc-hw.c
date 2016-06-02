@@ -4,7 +4,7 @@ uart_t   *uart0  = (uart_t *)   0x20000000;
 timer_t  *timer0 = (timer_t *)  0x30000000;
 gpio_t   *gpio0  = (gpio_t *)   0x40000000;
 spi_t	*spi0 	= (spi_t *)  	0x50000000;
-spi_t	*spi1	=	(spi_t *)	0x60000000; 
+spi_t   *spi1   = (spi_t *)	0x60000000;
 
 //isr_ptr_t isr_table[32];
 
@@ -12,34 +12,40 @@ spi_t	*spi1	=	(spi_t *)	0x60000000;
 void tic_isr();
 /***************************************************************************
  * IRQ handling
- */
-/*
+ */ /*
 void isr_null()
 {
 }
+
 void irq_handler(uint32_t pending)
 {
 	int i;
+
 	for(i=0; i<32; i++) {
 		if (pending & 0x01) (*isr_table[i])();
 		pending >>= 1;
 	}
 }
+
 void isr_init()
 {
 	int i;
 	for(i=0; i<32; i++)
 		isr_table[i] = &isr_null;
 }
+
 void isr_register(int irq, isr_ptr_t isr)
 {
 	isr_table[irq] = isr;
 }
+
 void isr_unregister(int irq)
 {
 	isr_table[irq] = &isr_null;
 }
 */
+
+
 /***************************************************************************
  * TIMER Functions
  */
@@ -160,101 +166,178 @@ void gpio_set_out(char c){
 	 gpio0->gpio_out = c;
 }
 
-/*****************************************SPI0 Functions****/
+/*****************************************SPI Functions****/
 
-
-char spi_get_div(spi_t *spi){
-	return spi->spi_divisor;
-}
-
-char spi_get_mosi(spi_t *spi){
-	return spi->spi_rx_tx;
-
-}
-
-char spi_get_cs(spi_t *spi){
-	return spi->spi_cs;
-}
-
-char spi_get_miso(spi_t *spi){
-	while ((spi -> spi_run));
-	return spi->spi_rx_tx;
-
-}
-
-char read_adc(spi_t *spi0, char cs){
-	spi_set_cs(spi0, 0xF);
+char read_adc(char cs){
+	spi_set_cs(0xF);
 	nsleep(20);	
-	char msb;
-	char lsb;
-	char lsb2;	
-	spi_set_cs(spi0, cs);
+	char msb = 0x00;
+	char lsb = 0x00;
+	char lsb2 = 0x00;	
+	spi_set_cs(cs);
 	nsleep(30);
-	spi_set_mosi(spi0, 0xC0);
-	msb = spi_get_miso(spi0);
-	spi_set_cs(spi0, cs);
-	spi_set_mosi(spi0, 0x00);
-	lsb = spi_get_miso(spi0);
-	spi_set_cs(spi0, cs);
-	spi_set_mosi(spi0, 0x00);
-	lsb2 = spi_get_miso(spi0);
+	spi_set_mosi(0xC0);
+	msb = spi_get_miso();
+	spi_set_cs(cs);
+	spi_set_mosi(0x00);
+	lsb = spi_get_miso();
+	spi_set_cs(cs);
+	spi_set_mosi(0x00);
+	lsb2 = spi_get_miso();
+
 	if(msb == 0x00 && lsb == 0x00 && lsb == 0x00){
-	spi_set_cs(spi0, 0x01);
+	gpio_set_out(0xFF);
 	}
+
 	else
-	spi_set_cs(spi0, 0x00);	
+	switch(cs){
+		case ~0x01:
+		gpio_set_out(0xE0);		
+		break;
+	
+		case ~0x02:
+		gpio_set_out(0xD0);
+		break;
+	
+		case ~0x04:
+		gpio_set_out(0xB0);
+		break;
+	
+		case ~0x08:
+		gpio_set_out(0x70);
+		break;
+	
+		default: 
+		gpio_set_out(0xFF);
+		break;
+		}
+			
+
+	//msleep(50);	
+	//spi_set_cs(0x01);
+	return msb|lsb;
+	
 }
 
-void spi_init(spi0){
-	read_adc(spi0, 0x01);
-	read_adc(spi0, 0x02);
-	read_adc(spi0, 0x04);
-	read_adc(spi0, 0x08);
+void spi_init(){
+	read_adc(0x01);
+	read_adc(0x02);
+	read_adc(0x04);
+	read_adc(0x08);
 }
 
-void spi_set_div(spi_t *spi, char c){
-	 spi->spi_divisor = c;
+void midi_wr(char mode, char data1 ,char data2, char status){
+	
+
+	if(mode == 0){ //init
+	status = 0;
+	data1 = 0;
+	data2 = 0;
+	}	
+
+	if(mode == 1){//note on
+	status = 0x9A;
+	data1 = 0x1F;
+	}
+	
+	if (mode == 2){//note off
+	status = 0x9A;
+	data1 = 0x1F;
+	data2 = 0x00;
+	}
+	
+	uart_putchar(status);
+	uart_putchar(data1);
+	uart_putchar(data2);
+
+
+
 }
 
-void spi_set_cs(spi_t *spi, char  c){
-	spi->spi_cs=c;
-}
-void spi_set_mosi(spi_t *spi, char c){
-	 while ((spi -> spi_run));
-	 spi->	spi_rx_tx = c;
+void midi_set_vol(char data2, char vol){
+	data2 = vol & 0x7F;
 }
 
-void spi_set_miso(spi_t *spi, char c){
-	 while ((spi -> spi_run));
+char spi_get_div(){
+	return spi0->spi_divisor;
+}
+
+
+char spi_get_mosi(){
+	return spi0->spi_rx_tx;
+
+}
+
+
+char spi_get_cs(){
+	return spi0->spi_cs;
+
+}
+char spi_get_miso(){
+	while ((spi0 -> spi_run));
+	return spi0->spi_rx_tx;
+
+}
+
+void spi_set_div(char c){
+	 spi0->spi_divisor = c;
+}
+
+
+void spi_set_cs(char c){
+	spi0->spi_cs=c;
+}
+void spi_set_mosi(char c){
+	 while ((spi0 -> spi_run));
+	 spi0->	spi_rx_tx = c;
+}
+
+void spi_set_miso(char c){
+	 while ((spi0 -> spi_run));
 	 spi0->spi_rx_tx = c;
 }
 
-/**************************************SPI1 Functions****************************************/
+/*****************************************SPI1 Functions****/
 
-/*char spi1_get_div(){
+char spi1_get_div(){
 	return spi1->spi_divisor;
 }
+
+
 char spi1_get_mosi(){
 	return spi1->spi_rx_tx;
+
 }
+
+
 char spi1_get_cs(){
 	return spi1->spi_cs;
+
 }
 char spi1_get_miso(){
 	while ((spi1 -> spi_run));
-	return spi1 -> spi_rx_tx;
+	return spi1->spi_rx_tx;
+
 }
+
 void spi1_set_div(char c){
-	 spi1 -> spi_divisor = c;
+	 spi1->spi_divisor = c;
 }
+
+
 void spi1_set_cs(char c){
-	spi1 -> spi_cs=c;
+	spi1->spi_cs=c;
 }
 void spi1_set_mosi(char c){
 	 while ((spi1 -> spi_run));
-	 spi1 ->	spi_rx_tx = c;
+	 spi1->	spi_rx_tx = c;
 }
+
 void spi1_set_miso(char c){
 	 while ((spi1 -> spi_run));
 	 spi1->spi_rx_tx = c;
-}*/
+}
+
+
+
+
